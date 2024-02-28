@@ -11,19 +11,19 @@ console.log("undefined - undefined - seconds:\n\n", durationBetweenDates(undefin
 console.log("{foo: bar} - undefined - seconds :\n\n", durationBetweenDates({ foo: "bar" }, undefined, "seconds"));
 
 //за замовчуванням (поточна дата, UNIX epoch, секунди)
-function durationBetweenDates(firstDate = new Date(0), secondDate = new Date(), type = "seconds") {
+function durationBetweenDates(startDate = new Date(0), endDate = new Date(), type = "seconds") {
     //шукаємо різницю у часі між датами (буде у мілісекундах)
-    const difference = (new Date(secondDate)).getTime() - (new Date(firstDate)).getTime();
+    const difference = (new Date(endDate)).getTime() - (new Date(startDate)).getTime();
     //якщо вдалося обчислити різницю у часі
     if (!isNaN(difference)) {
         //обчислюємо модуль різниці між двома датами - оскільки нам не відомо, яка подія відбулась раніше
         const timeBetweenTwoDate = Math.abs(difference);
         //залежно від третього параметра виберемо формулу для розрахунку часу
         switch (type) {
-            case "seconds": return  `${(timeBetweenTwoDate / 1000)} seconds`;
-            case "minutes": return `${timeBetweenTwoDate / (60 * 1000)} minutes`;
-            case "hours": return `${timeBetweenTwoDate / (60 * 60 * 1000)} hours`;
-            case "days": return `${timeBetweenTwoDate / (24 * 60 * 60 * 1000)} days`;
+            case "seconds": return `${(timeBetweenTwoDate / 1000)} ${type}`;
+            case "minutes": return `${timeBetweenTwoDate / (60 * 1000)} ${type}`;
+            case "hours": return `${timeBetweenTwoDate / (60 * 60 * 1000)} ${type}`;
+            case "days": return `${timeBetweenTwoDate / (24 * 60 * 60 * 1000)} ${type}`;
             default:
                 //якщо третій параметр вказано невірно
                 return `Sorry, it's not the correct parameter for time units [${type}]`;
@@ -31,5 +31,5 @@ function durationBetweenDates(firstDate = new Date(0), secondDate = new Date(), 
     }
     else
         //якщо котрась з дат введена не коректно і не пройшла умова if
-        return `Sorry, it's not the correct format of the date [${firstDate}] or [${secondDate}]`;
+        return `Sorry, it's not the correct format of the date [${startDate}] or [${endDate}]`;
 }
